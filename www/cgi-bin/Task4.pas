@@ -1,0 +1,39 @@
+﻿PROGRAM PrintEnvironment(INPUT, OUTPUT);
+USES
+  DOS;
+FUNCTION GetQueryStringParameter(KEY: STRING): STRING;
+VAR
+  QueryString, Parameter: STRING;
+  PosParameter, ParameterLength, ParameterEnd: INTEGER;
+BEGIN
+  QueryString := GetEnv('QUERY_STRING');
+  KEY := KEY + '=';
+  PosParameter := Pos(KEY, QueryString);
+  IF PosParameter = 0
+  THEN
+    Exit('');
+  ParameterEnd := Pos('&', QueryString);
+  WHILE (ParameterEnd <> 0) AND (ParameterEnd < PosParameter)
+  DO
+    BEGIN
+      Delete(QueryString, ParameterEnd, 1);
+      Insert('$', QueryString, ParameterEnd);
+      ParameterEnd := Pos('&', QueryString)
+    END;
+  IF ParameterEnd = 0
+  THEN
+    ParameterLength := Length(QueryString)
+  ELSE
+    ParameterLength := ParameterEnd - (PosParameter + Length(KEY));
+  Parameter := Copy(QueryString, PosParameter + Length(KEY), ParameterLength);
+  Exit(Parameter)
+END;
+
+BEGIN
+  WRITELN('Content-Type: text/plain');
+  WRITELN;
+  WRITELN('First Name: ', GetQueryStringParameter('first_name'));
+  WRITELN('Last Name: ', GetQueryStringParameter('last_name'));
+  WRITELN('Age: ', GetQueryStringParameter('age'));
+  WRITELN
+END.

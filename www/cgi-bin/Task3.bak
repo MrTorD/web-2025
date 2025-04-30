@@ -1,0 +1,13 @@
+﻿PROGRAM PrintEnvironment(INPUT, OUTPUT);
+USES
+  GPC;
+VAR
+  QueryString, Name: STRING;
+  PosName: INTEGER;
+BEGIN
+  WRITELN(‘Content-Type: text/plain’);
+  WRITELN;
+  QueryString := GetEnv(QUERY_STRING);
+  PosName := ('name=', QueryString);
+  Name := Copy(QueryString, 100, PosName)
+END.  
