@@ -1,0 +1,28 @@
+[
+
+{
+    "post_id": 1,
+    "created_by": 1,
+    "likes": 201,
+    "timestamp": 1742921763,
+    "img": "https://github.com/MrTorD/web-2025/blob/main/images/Winter_Yoshkar-Ola.png?raw=true",
+    "title": "Так красиво зимой!"
+},
+{
+    "post_id": 2,
+    "created_by": 2,
+    "likes": 143,
+    "timestamp": 1743076032,
+    "img": "https://github.com/MrTorD/web-2025/blob/main/images/fish.jpg?raw=true",
+    "title": "Так красиво летом!"
+},
+{
+    "post_id": 3,
+    "created_by": 1,
+    "likes": 64,
+    "timestamp": 1743229487,
+    "img": "https://github.com/MrTorD/web-2025/blob/main/autumn.jpg?raw=true",
+    "title": "Так красиво осенью!"
+}
+
+]

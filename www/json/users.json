@@ -1,0 +1,16 @@
+[
+
+{
+    "id": 1,
+    "name": "Ваня Денисов",
+    "avatar": "https://github.com/MrTorD/web-2025/blob/main/images/Avatar.png?raw=true",
+    "description": "Привет! Я системный аналитик в ACME :) Тут моя жизнь только для самых классных!"
+},
+{  
+    "id": 2,
+    "name": "Денис Иванов",
+    "avatar": "https://github.com/MrTorD/web-2025/blob/main/images/Avatar1.png?raw=true",
+    "description": "Всем привет!"
+}
+
+]
