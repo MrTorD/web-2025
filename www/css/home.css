@@ -1,0 +1,41 @@
+@font-face {
+    font-family: GolosUI;
+    src: url(fonts/golos-ui_regular.ttf);
+}
+div{
+    padding-left: 40%;
+    padding-right: 40%;
+    font-size: 30px;
+}
+.time{
+    color: #22222280;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+p {
+    font-family: GolosUI;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: -0.15px;
+    line-height: 18px;
+}
+.post {
+    display: block;
+    width: 600px;
+    height: 600px;
+}
+.name {
+    display: inline;
+}
+
+.avatar {
+    height: 16px;
+    width: 16px;
+}
+
+button {
+    border: 0;
+    border-radius: 8px;
+    background-color: #2222220D; 
+    padding: 6px 12px;
+}

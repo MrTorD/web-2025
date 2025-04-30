@@ -1,0 +1,56 @@
+@font-face {
+    font-family: GolosUI;
+    src: url(fonts/golos-ui_regular.ttf);
+}
+body {
+    text-align: center;
+}
+.avatar {
+    height: 123px;
+    width: 123px;
+    border-radius: 16px;
+    margin-top: 97px;
+    display: block;
+    margin: auto;
+}
+.num_posts {
+    display: inline-block;
+    background-color: #F2F3F5;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin: 0 auto;
+}
+.post_img {
+    height: 16px;
+    width: 16px;
+}
+.text_posts {
+    display: inline;
+    font-family: GolosUI;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+}
+h1 {
+    font-family: GolosUI;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 32px; 
+}
+.description {
+    font-family: GolosUI;
+    font-weight: 400;
+    font-size: 15px;
+    text-align: center;
+}
+.pictures {
+    margin-top: 20px;
+    margin-left: 20%;
+    margin-right: 10%;
+    text-align: start;
+}
+img {
+    height: 322px;
+    width: 322px;
+    margin-right: 3px;
+}

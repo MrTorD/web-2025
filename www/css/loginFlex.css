@@ -1,0 +1,53 @@
+@font-face {
+    font-family: GolosUI;
+    src: url(fonts/golos-ui_regular.ttf);
+}
+
+.header {
+    font-family: GolosUI;
+    display: inline-flex;
+    position: relative;
+    top: 70px;
+    left: 15%;
+    font-size: 140px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.login-page {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-family: GolosUI;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: -0.15px;
+    font-weight: 400;
+
+}
+
+.login-page__form__input {
+    display: flex;
+    flex-direction: column;
+    background-color: #F2F3F5;
+    width: 343px;
+    height: 44px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border: #F2F3F5;
+}
+
+.login-page__form__label {
+    padding: 5px 0;
+}
+.login-page__form__button {
+    background-color: black;
+    color: white;
+    width: 343px;
+    font-weight: 500;
+    border-radius: 10px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 125px;
+    padding-right: 125px;
+}
