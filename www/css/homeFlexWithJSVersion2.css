@@ -1,0 +1,128 @@
+@font-face {
+    font-family: GolosUI;
+    src: url(fonts/golos-ui_regular.ttf);
+}
+.posts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: GolosUI;
+    font-size: 14px;
+}
+
+.modal {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    left: 0; 
+    top: 0;
+    width: 100vw; 
+    height: 100vh; 
+    background-color: #858585;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal__slider {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 600px;
+    height: 600px;
+}
+
+.modal__exit-button {
+    display: block;
+}
+
+.modal__slider__indicator {
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+    color: #ffffff;
+    font-family: GolosUI;
+    font-size: 15px;
+    margin-top: 5%;
+}
+.posts__post{
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: -0.15px;
+    line-height: 18px;
+}
+
+.posts__post__user {
+    display: flex;
+    align-items: center;
+}
+
+.posts__post__time{
+    color: #22222280;
+    margin-bottom: 30px;
+}
+
+.posts__post__slider {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    margin: 5px 0;
+}
+
+.posts__post__slider__image {
+    display: none;
+    width: 600px;
+    height: 600px;
+}
+.posts__post__slider__left-button {
+    position: absolute;
+    top: 50%;
+    left: 3%;
+}
+
+.posts__post__slider__right-button {
+    position: absolute;
+    right: 3%;
+    top: 50%;
+}
+
+
+.posts__post__slider__indicator {
+    position: absolute;
+    right: 3%;
+    top: 3%;
+    background-color: #00000080;
+    font-family: GolosUI;
+    font-size: 15px;
+    color: #ffffff;
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 10px;
+    border-radius: 20px;
+}
+
+.posts__post__image {
+    margin: 5px 0;
+    height: 600px;
+    width: 600px;
+}
+
+.posts__post__user__name {
+    margin: 5px;
+    display: inline-flex;
+    font-weight: 500;
+}
+
+.posts__post__user__avatar {
+    height: 32px;
+    width: 32px;
+    border-radius: 6px;
+}
+
+.posts__post__likes {
+    width: 12%;
+    border: 0;
+    border-radius: 8px;
+    background-color: #2222220D; 
+    padding: 6px 12px;
+}

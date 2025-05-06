@@ -11,7 +11,7 @@
 }
 
 .posts__post{
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     font-size: 15px;
     font-weight: 400;
@@ -29,10 +29,54 @@
     margin-bottom: 30px;
 }
 
-.posts__post__img {
+.posts__post__slider {
+    position: relative;
+    display: flex;
+    justify-content: center;
     width: 600px;
     height: 600px;
     margin: 5px 0;
+}
+
+.posts__post__slider__interface {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    height: 100%;
+    
+}
+
+.posts__post__slider__interface__button-left {
+    width: 20px;
+    height: 20px;
+}
+
+.posts__post__slider__buttons__button-right {
+    width: 20px;
+    height: 20px;
+}
+
+.posts__post__slider__interface__indicator {
+    position: absolute;
+    align-self: flex-start;
+    right: 0;
+    top: 5%;
+    background-color: #00000080;
+    font-family: GolosUI;
+    font-size: 15px;
+    color: #ffffff;
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 10px;
+    border-radius: 20px;
+}
+
+.posts__post__slider__images__image {
+    
+    height: 600px;
+    width: 600px;
 }
 
 .posts__post__user__name {
