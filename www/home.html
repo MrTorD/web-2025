@@ -3,39 +3,83 @@
     <head>
         <meta charset="UTF-8">
         <title>Лента</title>
-        <link href="css/homeFlex.css" rel="stylesheet">  
+        <link href="css/home.css" rel="stylesheet"> 
+        <script defer src="js/slider.js"></script>
+        <script defer src="js/modal.js"></script>
+        <script defer src="js/more.js"></script>
     </head>
     <body>
         <div class="posts">
-            <div class="post">
+            <div class="posts__sidebar">
+                <img id="home" class="posts__sidebar__icon" src="images/Home 24.png">
+                <img id="profile" class="posts__sidebar__icon" src="images/User 24.png">
+                <img id="add" class="posts__sidebar__icon" src="images/Plus 24.png">
+            </div>
+            <div class="posts__post">
                 <div class="posts__post__user">
                     <img class="posts__post__user__avatar" src="https://github.com/MrTorD/web-2025/blob/main/images/Avatar.png?raw=true" alt="Avatar">
                     <p class="posts__post__user__name">Ваня Денисов</p>
                 </div>
-                <img class="posts__post__img" src="https://github.com/MrTorD/web-2025/blob/main/images/Winter_Yoshkar-Ola.png?raw=true" alt="Зима">
+                <div class="posts__post__slider">
+                    <img class="posts__post__slider__left-button" src="images/Slider Button left.png">
+                    <img class="posts__post__slider__right-button" src="images/Slider Button right.png">
+                    <img class="posts__post__slider__image" src="images/WinterCity.png" alt="Зима">
+                    <img class="posts__post__slider__image" src="images/summer.jpg" height="600" width="600">
+                    <img class="posts__post__slider__image" src="images/autumn.jpg" height="600" width="600">
+                </div>
                 <button class="posts__post__likes" name="likes">❤️ 201</button>
-                <p class="posts__post__title">Так красиво зимой!</p>
+                <p class="posts__post__title">
+                    Много текста. Так красиво сегодня на улице! Много текста. 
+                    Много текста. Так красиво сегодня на улице! Много текста. 
+                    Много текста. Так красиво сегодня на улице! Много текста.  
+                    Много текста. Так красиво сегодня на улице! Много текста. 
+                    Много текста. Так красиво сегодня на улице! Много текста. 
+                    Много текста. Так красиво сегодня на улице! Много текста. 
+                </p>
                 <p class="posts__post__time">Два часа назад</p>
             </div>
-            <div class="post">
+            
+            <div class="posts__post">
                 <div class="posts__post__user">
                     <img class="posts__post__user__avatar" src="https://github.com/MrTorD/web-2025/blob/main/images/Avatar1.png?raw=true" alt="Avatar">
                     <p class="posts__post__user__name">Денис Иванов</p>
                 </div>
-                <img class="posts__post__img" src="https://github.com/MrTorD/web-2025/blob/main/images/fish.jpg?raw=true" height="600" width="600"  alt="Лето">
+                <div class="posts__post__slider">
+                    <img class="posts__post__slider__left-button" src="images/Slider Button left.png">
+                    <img class="posts__post__slider__right-button" src="images/Slider Button right.png">
+                    <img class="posts__post__slider__image" src="images/Paris.jpg" alt="Зима">
+                    <img class="posts__post__slider__image" src="images/Party.png" height="600" width="600">
+                    <img class="posts__post__slider__image" src="images/Yoshkar.png" height="600" width="600">
+                </div>
                 <button class="posts__post__likes" name="likes">❤️ 144</button>
                 <p class="posts__post__title">Так красиво летом!</p>
                 <p class="posts__post__time">Четыре часа назад</p>
             </div> 
-            <div class="post">
+            <div class="posts__post">
                 <div class="posts__post__user">
                     <img class="posts__post__user__avatar" src="https://github.com/MrTorD/web-2025/blob/main/images/Avatar1.png?raw=true" alt="Avatar">
                     <p class="posts__post__user__name">Ваня Денисов</p>
                 </div>
-                <img class="posts__post__img" src="https://github.com/MrTorD/web-2025/blob/main/autumn.jpg?raw=true" height="600" width="600"  alt="Осень">
+                <div class="posts__post__slider">
+                    <img class="posts__post__slider__left-button" src="images/Slider Button left.png">
+                    <img class="posts__post__slider__right-button" src="images/Slider Button right.png">
+                    <img class="posts__post__slider__image" src="images/Cake.png" alt="Зима">
+                    <img class="posts__post__slider__image" src="images/Book.png" height="600" width="600">
+                </div>
                 <button class="posts__post__likes" name="likes">❤️ 32</button>
-                <p class="posts__post__title">Так красиво осенью!</p>
+                <p class="posts__post__title">
+                    Так красиво осенью! Много букв. 
+                    Так красиво осенью! Много букв. 
+                    Так красиво осенью! Много букв. 
+                    Так красиво осенью! Много букв.
+                    Так красиво осенью! Много букв. 
+                    Так красиво осенью! Много букв. 
+                    Так красиво осенью! Много букв. 
+                    Так красиво осенью! Много букв.  
+                </p>
                 <p class="posts__post__time">Три часа назад</p>
-            </div>          
+            </div>
+        </div>    
+        <div class="modal"></div>
     </body>
 </html>

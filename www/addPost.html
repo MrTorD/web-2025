@@ -3,30 +3,37 @@
     <head>
         <meta charset="UTF-8">
         <title>Опубликовать пост</title> 
-        <link href="css/addPost.css" rel="stylesheet">     
+        <link href="css/addPost.css" rel="stylesheet">  
+        <script defer src="js/slider.js"></script>
+        <script defer src="js/addPost.js"></script> 
     </head>
     <body>
+        <input type="file" id="upload" style="display: none;">
         <div class="add-post">
             <div class="add-post__sidebar">
-                <img class="add-post__sidebar__icon" src="images/Home 24.png">
-                <img class="add-post__sidebar__icon" src="images/User 24.png">
-                <img class="add-post__sidebar__icon" src="images/Plus 24.png">
+                <img id="home" class="add-post__sidebar__icon" src="images/Home 24.png">
+                <img id="profile" class="add-post__sidebar__icon" src="images/User 24.png">
+                <img id="add" class="add-post__sidebar__icon" src="images/Plus 24.png">
             </div>
             <div class="add-post__interface">
                 <div class="add-post__interface__window">
+                    <div class="posts__post__slider" style="display: none;">
+                            <img class="posts__post__slider__left-button" src="images/Slider Button left.png">
+                            <img class="posts__post__slider__right-button" src="images/Slider Button right.png">
+                        </div>
                     <div class="add-post__interface__window__content">
                         <img class="add-post__interface__window__content__image" src="images/Picture.png">
-                        <button class="add-post__interface__window__content__button">Добавить фото</button>
+                        <label for="upload" class="add-post__interface__window__content__button">Добавить фото</label>
                     </div>
                 </div>
-                <button class="add-post__interface__add-photo"> 
+                <label for="upload" class="add-post__interface__add-photo">
                     <img class="add-post__interface__add-photo__img" src="images/Plus-square 16.png">
                     Добавить фото
-                </button>
-                <textarea class="add-post__interface__add-title" placeholder="Добавьте подпись"></textarea>
+                </label>
+                <input type="text" class="add-post__interface__add-title" placeholder="Добавьте подпись...">
 
 
-                <button class="add-post__interface__submit">Поделиться</button>
+                <button class="add-post__interface__submit" disabled>Поделиться</button>
             </div>
         </div>
     </body>
