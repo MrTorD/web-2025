@@ -2,38 +2,170 @@
     font-family: GolosUI;
     src: url(fonts/golos-ui_regular.ttf);
 }
-div{
-    padding-left: 40%;
-    padding-right: 40%;
-    font-size: 30px;
-}
-.time{
-    color: #22222280;
-    font-size: 14px;
-    margin-bottom: 30px;
-}
-p {
+.posts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: GolosUI;
+    font-size: 14px;
+}
+
+.posts__sidebar {
+    position: fixed;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.posts__sidebar__icon {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    margin: 12px 24px;
+}
+
+.modal {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    left: 0; 
+    top: 0;
+    width: 100vw; 
+    height: 100vh; 
+    background-color: #858585;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal__slider {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 600px;
+    height: 600px;
+}
+
+.modal__exit-button {
+    display: none;
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    bottom: 101%;
+}
+
+.modal__slider__indicator {
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+    color: #ffffff;
+    font-family: GolosUI;
+    font-size: 15px;
+    margin-top: 5%;
+    display: block;
+    margin: 20px auto;
+}
+.posts__post{
+    display: flex;
+    flex-direction: column;
     font-size: 15px;
     font-weight: 400;
     letter-spacing: -0.15px;
     line-height: 18px;
 }
-.post {
-    display: block;
+
+.posts__post__user {
+    display: flex;
+    align-items: center;
+}
+
+.posts__post__time{
+    color: #22222280;
+    margin-bottom: 30px;
+}
+
+.posts__post__title {
+  width: 600px;
+  margin-bottom: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; 
+}
+
+.posts__post__title__more {
+    font-family: GolosUI;
+    font-size: 15px;
+    font-weight: 400;
+    color: #808080;
+    border: 0;
+    padding-left: 0;
+    background-color: white;
+    margin: 0 0;
+    align-self: flex-start;
+    cursor: pointer;
+}
+
+.posts__post__slider {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    margin: 5px 0;
+}
+
+.posts__post__slider__image {
+    display: none;
     width: 600px;
     height: 600px;
 }
-.name {
-    display: inline;
+.posts__post__slider__left-button {
+    position: absolute;
+    cursor: pointer;
+    top: 50%;
+    left: 3%;
 }
 
-.avatar {
-    height: 16px;
-    width: 16px;
+.posts__post__slider__right-button {
+    position: absolute;
+    cursor: pointer;
+    right: 3%;
+    top: 50%;
 }
 
-button {
+
+.posts__post__slider__indicator {
+    position: absolute;
+    right: 3%;
+    top: 3%;
+    background-color: #00000080;
+    font-family: GolosUI;
+    font-size: 15px;
+    color: #ffffff;
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 10px;
+    border-radius: 20px;
+}
+
+.posts__post__image {
+    margin: 5px 0;
+    height: 600px;
+    width: 600px;
+}
+
+.posts__post__user__name {
+    margin: 5px;
+    display: inline-flex;
+    font-weight: 500;
+}
+
+.posts__post__user__avatar {
+    height: 32px;
+    width: 32px;
+    border-radius: 6px;
+}
+
+.posts__post__likes {
+    width: 12%;
     border: 0;
     border-radius: 8px;
     background-color: #2222220D; 

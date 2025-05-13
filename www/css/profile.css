@@ -2,55 +2,79 @@
     font-family: GolosUI;
     src: url(fonts/golos-ui_regular.ttf);
 }
-body {
-    text-align: center;
+
+.profile {
+    font-family: GolosUI;
+    font-size: 15px;
+    font-weight: 400;
 }
-.avatar {
+
+.profile__sidebar {
+    position: fixed;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile__sidebar__icon {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    margin: 12px 24px;
+}
+.profile__user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile__user__avatar {
     height: 123px;
     width: 123px;
     border-radius: 16px;
-    margin-top: 97px;
-    display: block;
-    margin: auto;
 }
-.num_posts {
-    display: inline-block;
+
+.profile__pictures {
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.profile__user__posts-info {
+    display: inline-flex;
     background-color: #F2F3F5;
     border-radius: 6px;
     padding: 6px 10px;
     margin: 0 auto;
 }
-.post_img {
+
+.profile__user__posts-info__num-posts {
+    margin: 0;
+}
+.profile__user__posts-info__picture {
     height: 16px;
     width: 16px;
 }
 .text_posts {
-    display: inline;
-    font-family: GolosUI;
-    font-weight: 400;
-    font-size: 15px;
     line-height: 18px;
 }
-h1 {
-    font-family: GolosUI;
+.profile__user__name {
     font-weight: 500;
     font-size: 32px;
     line-height: 32px; 
 }
-.description {
-    font-family: GolosUI;
-    font-weight: 400;
-    font-size: 15px;
+.profile__user__description {
     text-align: center;
 }
-.pictures {
-    margin-top: 20px;
-    margin-left: 20%;
-    margin-right: 10%;
-    text-align: start;
+.profile__pictures {
+    display: flex;
+    justify-self: center;
+    width: 75%;
+    justify-content: flex-start;
+    margin-top: 5px;
 }
-img {
+.profile__pictures__picture {
     height: 322px;
     width: 322px;
-    margin-right: 3px;
+    margin: 2px;
 }
