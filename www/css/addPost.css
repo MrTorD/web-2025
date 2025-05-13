@@ -1,0 +1,96 @@
+@font-face {
+    font-family: GolosUI;
+    src: url(fonts/golos-ui_regular.ttf);
+}
+
+.add-post {
+    display: flex;
+    justify-content: center;
+}
+
+.add-post__sidebar {
+    position: absolute;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.add-post__sidebar__icon {
+    width: 24px;
+    height: 24px;
+    margin: 12px 24px;
+}
+
+.add-post__interface {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-post__interface__window {
+    margin-top: 30px;
+    background-color: #F2F3F5;
+    width: 474px;
+    height: 474px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-post__interface__window__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-post__interface__window__content__image {
+    height: 82px;
+    width: 82px;
+    margin-bottom: 25px;
+}
+
+.add-post__interface__window__content__button {
+    background-color: black;
+    color: white;
+    font-family: GolosUI;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 100%;
+    letter-spacing: 0;
+    padding: 16px;
+    border-radius: 10px;
+    border: 0;
+}
+
+.add-post__interface__add-photo {
+    display: inline-flex;
+    background-color: white;
+    color: #3F8AE0;
+    border: 0;
+    margin: 20px 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.add-post__interface__add-photo__img{
+    margin-right: 5px;
+}
+
+.add-post__interface__add-title {
+    border: 0;
+    margin: 20px 0;
+    height: 180px;
+}
+
+.add-post__interface__submit {
+    width: 140px;
+    background-color: black;
+    color: white;
+    font-family: GolosUI;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 100%;
+    letter-spacing: 0;
+    padding: 16px;
+    border-radius: 10px;
+    border: 0;
+}
