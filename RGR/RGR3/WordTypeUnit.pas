@@ -4,6 +4,7 @@ INTERFACE
 CONST
   MaxWordLen = 20;
   MaxEndingLen = 3;
+  MaxConfigLen = 100;
   SupportableChars = ['0'..'9', 'A'..'Z', 'a'..'z', '''', 'À'..'ß', 'à'..'ÿ', '¸', '¨'];
   EndWordChar = '$';
   NullEndingChar = '!';
@@ -13,10 +14,14 @@ CONST
 TYPE 
   WordType = ARRAY [0..(MaxWordLen + 1)] OF CHAR;
   EndingType = ARRAY [0..(MaxEndingLen + 1)] OF CHAR;
+  EndingsConfig = ARRAY [0..(MaxConfigLen + 1)] OF EndingType;
   
 VAR
   NullEnding: EndingType;  
-
+  EndingsConfigFile: TEXT;
+  Config: EndingsConfig;
+  EndOfConfig: EndingType;
+  
 PROCEDURE ReadWord(VAR FIn: TEXT; VAR Word: WordType);  
 PROCEDURE ReadEnding(VAR FIn: TEXT; VAR Ending: EndingType);
 PROCEDURE WriteWord(VAR FOut: TEXT; VAR Word: WordType);
@@ -29,9 +34,6 @@ FUNCTION IsBiggerEnding(VAR Ending1: EndingType; VAR Ending2: EndingType) : BOOL
 FUNCTION IsEqualsEnding(VAR Ending1: EndingType; VAR Ending2: EndingType) : BOOLEAN;
 
 IMPLEMENTATION
-
-VAR 
-  EndingsConfig: TEXT;
   
 PROCEDURE ToLowerCase(VAR Ch: CHAR);
 BEGIN {ToLowerCase}
@@ -135,22 +137,6 @@ BEGIN {ReadEnding}
       I := I + 1
     END;  
   Ending[I] := EndWordChar
-END; {ReadEnding}
-
-PROCEDURE ReadEndingFromConfig(VAR FIn: TEXT; VAR Ending: EndingType);
-VAR
-  I: INTEGER;
-  Ch: CHAR;
-BEGIN {ReadEnding}
-  I := 0;
-  WHILE NOT EOLN(FIn)
-  DO
-    BEGIN
-      READ(FIn, Ending[I]);
-      I := I + 1
-    END;
-  Ending[I] := EndWordChar;
-  READLN(EndingsConfig)  
 END; {ReadEnding}
 
 PROCEDURE WriteWord(VAR FOut: TEXT; VAR Word: WordType);
@@ -338,12 +324,16 @@ END; {GetBase}
 PROCEDURE SplitWord(VAR Word: WordType; VAR Base: WordType; VAR Ending: EndingType);
 VAR 
   IWord, IEnd: INTEGER;
+  ICfg: INTEGER;
 BEGIN {SplitWord}
-  RESET(EndingsConfig);
-  ReadEndingFromConfig(EndingsConfig, Ending);
-  WHILE (NOT EOF(EndingsConfig)) AND (NOT IsEndOf(Ending, Word)) 
+  ICfg := 0;
+  Ending := Config[ICfg];
+  WHILE (Config[ICfg] <> EndOfConfig) AND (NOT IsEndOf(Ending, Word)) 
   DO  
-    ReadEndingFromConfig(EndingsConfig, Ending); 
+    BEGIN
+      Ending := Config[ICfg];
+      ICfg := ICfg + 1
+    END; 
   IF IsEndOf(Ending, Word)
   THEN
     GetBase(Word, Ending, Base)
@@ -352,11 +342,32 @@ BEGIN {SplitWord}
       Base := Word;
       Ending := NullEnding
     END           
-END; {SplitWord}                                                    
+END; {SplitWord} 
+
+PROCEDURE CreateConfig(VAR Config: EndingsConfig; VAR EndingsConfigFile: TEXT);
+VAR
+  I: INTEGER;
+  Ending: EndingType;
+BEGIN {CreateConfig}
+  I := 0;
+  WHILE NOT EOF(EndingsConfigFile)
+  DO
+    BEGIN
+      ReadEnding(EndingsConfigFile, Ending);
+      Config[I] := Ending;
+      READLN(EndingsConfigFile);
+      I := I + 1
+    END;
+  Config[I] := EndOfConfig  
+END; {CreateConfig}  
+                                                     
 
 BEGIN
   NullEnding[0] := NullEndingChar;
   NullEnding[1] := EndWordChar; 
-  ASSIGN(EndingsConfig, 'EndingsConfig.txt');
-  RESET(EndingsConfig)
+  EndOfConfig[0] := '.';
+  EndOfConfig[1] := EndWordChar;
+  ASSIGN(EndingsConfigFile, 'EndingsConfig.txt');
+  RESET(EndingsConfigFile);
+  CreateConfig(Config, EndingsConfigFile);  
 END. 
