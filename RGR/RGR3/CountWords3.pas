@@ -5,7 +5,7 @@ USES
   FileWork;
 
 CONST
-  NodesMaxCount = 10000000;        
+  NodesMaxCount = 10000000;          
 
 PROCEDURE CountWords(VAR FIn: TEXT; VAR FOut: TEXT);
 VAR
@@ -40,20 +40,20 @@ BEGIN {CountWords}
                 CopyFile(TempF, F);
                 DisposeMemory(Root);
                 Root := NIL;
-                NodesCounter := 0 
+                NodesCounter := 0
               END 
           END
         ELSE
           READ(FIn, Ch);
       READLN(FIn)    
     END;
-  {REWRITE(TreeF);  
+  REWRITE(TreeF);  
   PrintTree(TreeF, Root);
   DisposeMemory(Root);
   Merge(TempF, F, TreeF);
+  CopyFile(TempF, FOut);
   CopyFile(TempF, F);       
-  CopyFile(F, FOut)}
-  PrintTree(FOut, Root)
+  CopyFile(F, FOut)
 END; {CountWords}      
 
 BEGIN

@@ -122,7 +122,30 @@ PROCEDURE ReadEnding(VAR FIn: TEXT; VAR Ending: EndingType);
 VAR
   I: INTEGER;
   Ch: CHAR;
-BEGIN {ReadWord}
+BEGIN {ReadEnding}
+  I := 0;
+  WHILE (FIn^ IN SupportableChars) AND (I <= MaxEndingLen) 
+  DO
+    BEGIN
+      READ(FIn, Ch);
+      IF Ch IN ['a'..'z', '-', '''', 'à'..'ÿ', '¸']
+      THEN
+        Ending[I] := Ch
+      ELSE
+        BEGIN
+          ToLowerCase(Ch);
+          Ending[I] := Ch
+        END;    
+      I := I + 1
+    END;  
+  Ending[I] := EndWordChar
+END; {ReadEnding}
+
+PROCEDURE ReadEndingFromConfig(VAR FIn: TEXT; VAR Ending: EndingType);
+VAR
+  I: INTEGER;
+  Ch: CHAR;
+BEGIN {ReadEnding}
   I := 0;
   WHILE NOT EOLN(FIn)
   DO
@@ -132,7 +155,7 @@ BEGIN {ReadWord}
     END;
   Ending[I] := EndWordChar;
   READLN(EndingsConfig)  
-END; {ReadWord}
+END; {ReadEnding}
 
 PROCEDURE WriteWord(VAR FOut: TEXT; VAR Word: WordType);
 VAR
@@ -317,10 +340,10 @@ VAR
   IWord, IEnd: INTEGER;
 BEGIN {SplitWord}
   RESET(EndingsConfig);
-  ReadEnding(EndingsConfig, Ending);
+  ReadEndingFromConfig(EndingsConfig, Ending);
   WHILE (NOT EOF(EndingsConfig)) AND (NOT IsEndOf(Ending, Word)) 
   DO  
-    ReadEnding(EndingsConfig, Ending); 
+    ReadEndingFromConfig(EndingsConfig, Ending); 
   IF IsEndOf(Ending, Word)
   THEN
     GetBase(Word, Ending, Base)

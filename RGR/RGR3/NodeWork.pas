@@ -121,7 +121,7 @@ BEGIN {PrintTree}
     BEGIN
       PrintTree(FOut, Ptr^.LLink);
       WriteWord(FOut, Ptr^.Base);
-      WRITE(FOUT, ',');
+      WRITE(FOut, ',');
       WriteEndings(FOut, Ptr^.FirstEndingPtr); 
       WRITELN(FOut, ':', Ptr^.Count);
       PrintTree(FOut, Ptr^.RLink)
