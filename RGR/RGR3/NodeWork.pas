@@ -23,8 +23,23 @@ PROCEDURE Insert(VAR Ptr: Tree; VAR Word: WordType);
 PROCEDURE InsertEnding(VAR FirstEndingPtr: EndingNodePtr; VAR Ending: EndingType);
 PROCEDURE PrintTree(VAR FOut: TEXT; VAR Ptr: Tree);
 PROCEDURE DisposeMemory(VAR Ptr: Tree);
+PROCEDURE DisposeEndings(VAR FirstEndingPtr: EndingNodePtr);
 
 IMPLEMENTATION
+
+PROCEDURE DisposeEndings(VAR FirstEndingPtr: EndingNodePtr);
+VAR
+  NewPtr: EndingNodePtr;
+BEGIN {DisposeEndings}
+  WHILE FirstEndingPtr <> NIL
+  DO
+    BEGIN
+      NewPtr := FirstEndingPtr;
+      DISPOSE(FirstEndingPtr);
+      FirstEndingPtr := NewPtr^.Next    
+    END;
+  DISPOSE(NewPtr)  
+END; {DisposeEndings}
 
 PROCEDURE FindInsertionPoint(VAR Prev: EndingNodePtr; VAR Curr: EndingNodePtr; VAR NewPtr: EndingNodePtr);
 VAR
@@ -42,6 +57,20 @@ BEGIN {FindInsertPoint}
     ELSE
       Found := TRUE    
 END; {FindInsertPoint}
+
+PROCEDURE WriteEndings(VAR FOut: TEXT; VAR FirstEndingPtr: EndingNodePtr);
+VAR 
+  NewPtr: EndingNodePtr;
+BEGIN {WriteEndings}
+  NewPtr := FirstEndingPtr;
+  WHILE NewPtr <> NIL
+  DO
+    BEGIN
+      WriteEnding(FOut, NewPtr^.Ending);
+      WRITE(FOut, ',');
+      NewPtr := NewPtr^.Next
+    END
+END; {WriteEndings}
 
 PROCEDURE InsertEnding(VAR FirstEndingPtr: EndingNodePtr; VAR Ending: EndingType);
 VAR
@@ -63,22 +92,8 @@ BEGIN {InsertEnding}
         FirstEndingPtr := NewPtr
       ELSE
         Prev^.Next := NewPtr  
-    END    
+    END     
 END; {InsertEnding} 
-
-PROCEDURE WriteEndings(VAR FOut: TEXT; VAR FirstEndingPtr: EndingNodePtr);
-VAR 
-  NewPtr: EndingNodePtr;
-BEGIN {WriteEndings}
-  NewPtr := FirstEndingPtr;
-  WHILE NewPtr <> NIL
-  DO
-    BEGIN
-      WriteEnding(FOut, NewPtr^.Ending);
-      WRITE(FOut, ',');
-      NewPtr := NewPtr^.Next
-    END
-END; {WriteEndings}
  
 PROCEDURE Insert(VAR Ptr: Tree; VAR Word: WordType);
 VAR
@@ -92,9 +107,7 @@ BEGIN {Insert}
       NEW(Ptr);
       Ptr^.Base := Base;
       Ptr^.FirstEndingPtr := NIL;
-      IF Ending <> NullEnding
-      THEN
-        InsertEnding(Ptr^.FirstEndingPtr, Ending);  
+      InsertEnding(Ptr^.FirstEndingPtr, Ending);  
       Ptr^.Count := 1;
       Ptr^.LLink := NIL;
       Ptr^.RLink := NIL
@@ -135,6 +148,7 @@ BEGIN {DisposeMemory}
     BEGIN
       DisposeMemory(Ptr^.LLink);
       DisposeMemory(Ptr^.RLink);
+      DisposeEndings(Ptr^.FirstEndingPtr);
       DISPOSE(Ptr)
     END
 END; {DisposeMemory}

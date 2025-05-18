@@ -6,6 +6,9 @@ CONST
   MaxEndingLen = 3;
   SupportableChars = ['0'..'9', 'A'..'Z', 'a'..'z', '''', 'À'..'ß', 'à'..'ÿ', '¸', '¨'];
   EndWordChar = '$';
+  NullEndingChar = '!';
+  BaseAndEndingsSeparator = ',';
+  WordAndCountSeparator = ':';
 
 TYPE 
   WordType = ARRAY [0..(MaxWordLen + 1)] OF CHAR;
@@ -124,18 +127,11 @@ VAR
   Ch: CHAR;
 BEGIN {ReadEnding}
   I := 0;
-  WHILE (FIn^ IN SupportableChars) AND (I <= MaxEndingLen) 
+  WHILE (FIn^ IN SupportableChars + [NullEndingChar]) AND (I <= MaxEndingLen) 
   DO
     BEGIN
       READ(FIn, Ch);
-      IF Ch IN ['a'..'z', '-', '''', 'à'..'ÿ', '¸']
-      THEN
-        Ending[I] := Ch
-      ELSE
-        BEGIN
-          ToLowerCase(Ch);
-          Ending[I] := Ch
-        END;    
+      Ending[I] := Ch; 
       I := I + 1
     END;  
   Ending[I] := EndWordChar
@@ -183,36 +179,6 @@ BEGIN {WriteEnding}
     END
 END; {WriteEnding}        
 
-FUNCTION IsBigger(VAR Word1: WordType; VAR Word2: WordType) : BOOLEAN;
-VAR
-  I: INTEGER;
-  Bigger: BOOLEAN;
-BEGIN {IsBigger}
-  I := 0;
-  Bigger := FALSE;
-  WHILE (Word1[I] <> EndWordChar) AND (Word2[I] <> EndWordChar) AND (Word1[I] = Word2[I])
-  DO
-    I := I + 1;
-  IF (Word1[I] <> EndWordChar) AND (Word2[I] <> EndWordChar)
-  THEN
-    IF (Word1[I] <> '¸') AND (Word2[I] <> '¸')
-    THEN
-      Bigger := Word1[I] > Word2[I]
-    ELSE
-      IF Word1[I] = '¸'
-      THEN          
-        Bigger := Word2[I] <= 'å'
-      ELSE
-        IF Word2[I] = '¸'
-        THEN               
-          Bigger := Word1[I] > 'å'            
-  ELSE
-    IF (Word1[I] <> EndWordChar) AND (Word2[I] = EndWordChar)
-    THEN
-      Bigger := TRUE;
-  IsBigger := Bigger   
-END; {IsBigger}
-
 FUNCTION IsEquals(VAR Word1: WordType; VAR Word2: WordType) : BOOLEAN;
 VAR
   I: INTEGER;
@@ -231,7 +197,39 @@ BEGIN {IsEquals}
   THEN
     Equality := FALSE;    
   IsEquals := Equality      
-END; {IsEquals}  
+END; {IsEquals} 
+
+FUNCTION IsBigger(VAR Word1: WordType; VAR Word2: WordType) : BOOLEAN;
+VAR
+  I: INTEGER;
+  Bigger: BOOLEAN;
+BEGIN {IsBigger}
+  I := 0;
+  Bigger := FALSE;
+  WHILE (Word1[I] <> EndWordChar) AND (Word2[I] <> EndWordChar) AND (Word1[I] = Word2[I])
+  DO
+    I := I + 1;
+  IF (Word1[I] <> EndWordChar) AND (Word2[I] <> EndWordChar)
+  THEN
+    BEGIN
+      IF (Word1[I] <> '¸') AND (Word2[I] <> '¸')
+      THEN
+        Bigger := Word1[I] > Word2[I]
+      ELSE
+        IF Word1[I] = '¸'
+        THEN          
+          Bigger := Word2[I] <= 'å'
+        ELSE
+          IF Word2[I] = '¸'
+          THEN               
+            Bigger := Word1[I] > 'å' 
+    END                   
+  ELSE
+    IF (Word1[I] <> EndWordChar) AND (Word2[I] = EndWordChar)
+    THEN
+      Bigger := TRUE;
+  IsBigger := Bigger   
+END; {IsBigger} 
 
 FUNCTION IsBiggerEnding(VAR Ending1: EndingType; VAR Ending2: EndingType) : BOOLEAN;
 VAR
@@ -245,17 +243,19 @@ BEGIN {IsBiggerEnding}
     I := I + 1;
   IF (Ending1[I] <> EndWordChar) AND (Ending2[I] <> EndWordChar)
   THEN
-    IF (Ending1[I] <> '¸') AND (Ending2[I] <> '¸')
-    THEN
-      Bigger := Ending1[I] > Ending2[I]
-    ELSE
-      IF Ending1[I] = '¸'
-      THEN          
-        Bigger := Ending2[I] <= 'å'
+    BEGIN
+      IF (Ending1[I] <> '¸') AND (Ending2[I] <> '¸')
+      THEN
+        Bigger := Ending1[I] > Ending2[I]
       ELSE
-        IF Ending2[I] = '¸'
-        THEN               
-          Bigger := Ending1[I] > 'å'            
+        IF Ending1[I] = '¸'
+        THEN          
+          Bigger := Ending2[I] <= 'å'
+        ELSE
+          IF Ending2[I] = '¸'
+          THEN               
+            Bigger := Ending1[I] > 'å' 
+    END                   
   ELSE
     IF (Ending1[I] <> EndWordChar) AND (Ending2[I] = EndWordChar)
     THEN
@@ -355,7 +355,8 @@ BEGIN {SplitWord}
 END; {SplitWord}                                                    
 
 BEGIN
-  NullEnding[0] := EndWordChar; 
+  NullEnding[0] := NullEndingChar;
+  NullEnding[1] := EndWordChar; 
   ASSIGN(EndingsConfig, 'EndingsConfig.txt');
   RESET(EndingsConfig)
 END. 

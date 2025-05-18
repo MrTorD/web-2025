@@ -6,11 +6,47 @@ USES
   NodeWork;  
 
 PROCEDURE CopyFile(VAR FIn: TEXT; VAR FOut: TEXT);
+PROCEDURE CopyFormated(VAR FIn: TEXT; VAR FOut: TEXT);
 PROCEDURE ReadLine(VAR F: TEXT; VAR Base: WordType; VAR FirstEndingPtr: EndingNodePtr; VAR Count: INTEGER);
 PROCEDURE WriteLine(VAR F: TEXT; VAR Base: WordType; VAR FirstEndingPtr: EndingNodePtr; VAR Count: INTEGER);
 PROCEDURE Merge(VAR F1: TEXT; VAR F2: TEXT; VAR F3: TEXT);
 
 IMPLEMENTATION
+
+PROCEDURE CopyFormated(VAR FIn: TEXT; VAR FOut: TEXT);
+VAR
+  Base: WordType;
+  Ending: EndingType;
+  Count: INTEGER;
+  Ch: CHAR;
+BEGIN {CopyFormated}
+  RESET(FIn);
+  REWRITE(FOut);
+  WHILE NOT EOF(FIn)
+  DO
+    BEGIN
+      ReadWord(FIn, Base);
+      READ(FIn, Ch);
+      WHILE FIn^ IN SupportableChars + [NullEndingChar]
+      DO
+        BEGIN
+          ReadEnding(FIn, Ending);
+          WriteWord(FOut, Base);
+          IF Ending[0] <> NullEndingChar
+          THEN
+            WriteEnding(FOut, Ending);
+          READ(FIn, Ch);
+          IF FIn^ <> WordAndCountSeparator
+          THEN
+            WRITE(FOut, BaseAndEndingsSeparator)  
+        END;
+      READ(FIn, Ch);
+      WRITE(FOut, Ch);
+      READ(FIn, Count);
+      WRITELN(FOut, Count);
+      READLN(FIn)    
+    END
+END; {CopyFormated}  
 
 PROCEDURE CopyFile(VAR FIn: TEXT; VAR FOut: TEXT);
 VAR
@@ -70,7 +106,7 @@ BEGIN {WriteLine}
       NewPtr := NewPtr^.Next
     END;
   WRITELN(F, ':', Count);
-  {DisposeEndings(FirstEndingPtr)}
+  DisposeEndings(FirstEndingPtr)
 END; {WriteLine}
 
 PROCEDURE MergeEndings(VAR FirstEndingPtr1: EndingNodePtr; VAR FirstEndingPtr2: EndingNodePtr);
@@ -84,7 +120,7 @@ BEGIN {MergeEndings}
       InsertEnding(FirstEndingPtr1, NewPtr^.Ending);
       NewPtr := NewPtr^.Next
     END;
-  {DisposeEndings(FirstEndingPtr2)}  
+  DisposeEndings(FirstEndingPtr2)  
 END; {MergeEndings} 
 
 PROCEDURE Merge(VAR F1: TEXT; VAR F2: TEXT; VAR F3: TEXT);
@@ -98,9 +134,7 @@ BEGIN {Merge}
   RESET(F3);
   REWRITE(F1);
   IsEmpty2 := EOF(F2);
-  IsEmpty3 := EOF(F3);
-  
-    
+  IsEmpty3 := EOF(F3);   
   IsUsed2 := FALSE;
   IsUsed3 := FALSE;
   IF NOT IsEmpty2
