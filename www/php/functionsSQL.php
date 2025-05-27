@@ -8,25 +8,86 @@ function connectDatabase(): PDO {
     $password = '123';
     return new PDO($dsn, $user, $password);
 }
+
+function changeLikeState(PDO $connection, $post_id, $user_id) {
+    $query = <<< SQL
+            SELECT 
+                post_id
+            FROM    
+                blog.likes
+            WHERE 
+                liked_by = $user_id    
+            SQL;
+
+    $statement = $connection->query($query);
+    $like = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if ($like == null) {
+        $query = <<< SQL
+                INSERT INTO
+                    blog.likes(
+                        post_id,
+                        liked_by
+                    )
+                VALUES(
+                    $post_id,
+                    $user_id
+                )
+                SQL;
+        $isLiked = false;        
+    } else {
+        $query = <<< SQL
+                DELETE FROM
+                    blog.likes
+                WHERE
+                    liked_by = $user_id    
+                SQL;
+        $isLiked = true;        
+    }
+
+    $statement = $connection->exec($query);
+
+    return $isLiked;
+    
+}
+
+function deletePostFromDataBase(PDO $connection, $post_id) {
+    $query = <<< SQL
+            DELETE FROM
+                blog.post
+            WHERE
+                post_id = $post_id
+            ;        
+            SQL;
+    $statement = $connection->exec($query); 
+
+    $query = <<< SQL
+        DELETE FROM
+            blog.images
+        WHERE
+            post_id = $post_id
+        ;        
+        SQL;
+    $statement = $connection->exec($query);        
+}
+
 function savePostToDatabase(PDO $connection, array $postParams) : int {
     $title = $postParams['title'];
     $likes = $postParams['likes'];
     $created_by = $postParams['created_by'];
-    $img = $postParams['img'];
+    $images = $postParams['images'];
     $query = <<< SQL
             INSERT INTO 
                 blog.post(
                     title,
                     likes,
-                    created_by,
-                    img
+                    created_by
             )    
             VALUES(
                 :title,
                 :likes,
-                :created_by,
-                :img
-            );    
+                :created_by
+            );
             SQL;
    
     $statement = $connection->prepare($query);
@@ -35,20 +96,45 @@ function savePostToDatabase(PDO $connection, array $postParams) : int {
         ':title' => $postParams['title'],
         ':likes' => $postParams['likes'],
         ':created_by' => $postParams['created_by'],
-        ':img' => $postParams['img']
     ]);
 
-    return (int)$connection->LastInsertId();    
+    $postId = (int)$connection->LastInsertId();  
+
+    saveImages($connection, $images, $postId);
+
+    return (int)$connection->LastInsertId();
 }
 
+function saveImages(PDO $connection, $images, $post_id) {
+    $query = <<< SQL
+            INSERT INTO 
+                blog.images(
+                    post_id,
+                    img
+            )    
+            VALUES(
+                :post_id,
+                :img
+            );
+            SQL;
+    
+    $statement = $connection->prepare($query);
+
+    foreach($images as $img) {
+        $statement->execute([
+            ':post_id' => $post_id,
+            'img' => $img
+        ]);
+    }
+}
 
 function findPostsInDatabase(PDO $connection) : array {    
     $query = <<< SQL
             SELECT 
+                post_id,
                 title,
                 created_by,
                 created_at,
-                img,
                 name,
                 avatar,
                 likes
@@ -58,11 +144,34 @@ function findPostsInDatabase(PDO $connection) : array {
             ;        
             SQL;
     $statement = $connection->query($query);
-    $row = $statement->fetchAll(PDO::FETCH_ASSOC);
-    if (!$row) {
+    $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!$posts) {
         throw new RunTimeException("Post with id $id not found");
     }
-    return $row ?: null;
+
+    $query = <<< SQL
+            SELECT 
+                post_id,
+                img
+            FROM
+                blog.images
+            ;        
+            SQL;
+
+    $statement = $connection->query($query);
+    $images = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($posts as &$post) {
+        $post['images'] = [];
+        foreach ($images as $image) {
+            if ($post['post_id'] == $image['post_id']) {
+                array_push($post['images'], $image['img']);
+            }
+        }
+    }
+
+    return $posts;
 }
 function findPostInDatabase(PDO $connection, $id) : array {
     $query = <<< SQL
@@ -70,7 +179,6 @@ function findPostInDatabase(PDO $connection, $id) : array {
                 title,
                 created_by,
                 created_at,
-                img,
                 name,
                 avatar,
                 likes
@@ -82,11 +190,32 @@ function findPostInDatabase(PDO $connection, $id) : array {
             ;        
             SQL;
     $statement = $connection->query($query);
-    $row = $statement->fetchAll(PDO::FETCH_ASSOC);
-    if (!$row) {
+    $post = $statement->fetch(PDO::FETCH_ASSOC);
+    if (!$post) {
         throw new RunTimeException("Post with id $id not found");
     }
-    return $row ?: null;
+
+    $query = <<< SQL
+            SELECT 
+                img
+            FROM
+                blog.images    
+            WHERE
+                post_id = $id    
+            ;
+            SQL;
+    $statement = $connection->query($query);
+    $images = $statement->fetchAll(PDO::FETCH_ASSOC);
+    if (!$images) {
+        throw new RunTimeException("Images not found");
+    }
+
+    $post['images'] = [];
+    foreach ($images as $image) {
+        array_push($post['images'], $image['img']);
+    }
+
+    return $post;
 }
 function findUserPostsInDatabase(PDO $connection, $user_id) : array {
     $query = <<< SQL
