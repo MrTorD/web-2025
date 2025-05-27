@@ -5,8 +5,7 @@ CREATE TABLE blog.post (
 	title VARCHAR(200) DEFAULT '',
 	created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	created_by INT UNSIGNED NOT NULL,
-	img VARCHAR(200) NOT NULL,
-	likes INT,
+	likes INT DEFAULT 0,
 	PRIMARY KEY (post_id)
 );
 
