@@ -24,7 +24,6 @@ if ($method == "POST") {
     $connection = connectDatabase();
     $json = [];
     $json = json_decode(file_get_contents($_FILES['json']['tmp_name']), true);
-
     $json['images'] = [];
 
     if (checkParams($json)) {
@@ -34,6 +33,8 @@ if ($method == "POST") {
             move_uploaded_file($image, PathToImg.$name); 
             array_push($json['images'], $name);
         }
+        echo $json['post_id'];
+        deletePostFromDataBase($connection, $json['post_id']);
         echo savePostToDatabase($connection, $json);
     } else {
         throw new Exception("Wrong params");
