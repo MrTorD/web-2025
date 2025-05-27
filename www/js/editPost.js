@@ -1,5 +1,3 @@
-const user_id = 1
-
 const inputImg_Id = "upload"
 const inputText_selector = ".add-post__interface__add-title"
 const submit_selector = ".add-post__interface__submit"
@@ -9,6 +7,8 @@ const slider_select = ".posts__post__slider"
 const slider_indicator_selector = ".posts__post__slider__indicator"
 const add_post_selector = ".add-post__interface"
 const success_windows_selector = ".success"
+const user_id_selector = ".add-post__interface__created-by"
+const post_id_selector = ".add-post__interface__post-id"
 
 const inputImg = document.getElementById(inputImg_Id)
 const inputText = document.querySelector(inputText_selector)
@@ -17,6 +17,9 @@ const startWindow = document.querySelector(startWindow_selector)
 const slider = document.querySelector(slider_select)
 const successWindow = document.querySelector(success_windows_selector)
 const addPostWindow = document.querySelector(add_post_selector)
+
+const user_id = document.querySelector(user_id_selector).innerHTML
+const post_id = document.querySelector(post_id_selector).innerHTML
 
 inputImg.addEventListener("change", slideHandler)
 submit.addEventListener("click", submitHandler)
@@ -54,11 +57,11 @@ function enableSumbit(isAnyPhoto) {
         submit.disabled = true
         submit.style.setProperty("background-color", "#B4B4B4")
     }
-
 }
 
 async function sendPost(text, images) {
     let json = {
+        "post_id": post_id,
         "created_by": user_id,
         "likes": 0,
         "title": text,
@@ -74,7 +77,7 @@ async function sendPost(text, images) {
         formData.append('images[]', images[i]); 
     }
 
-    const response = await fetch('api.php', {
+    const response = await fetch('apiEditPost.php', {
         method: "POST",
         body: formData
     })

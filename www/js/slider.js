@@ -1,10 +1,15 @@
-{
+const slider_selector = ".posts__post__slider"
+const left_button_selector = ".posts__post__slider__left-button"
+const right_button_selector = ".posts__post__slider__right-button"
+const image_selector = ".posts__post__slider__image"
+const indicatorClassName = "posts__post__slider__indicator"
+
 const home = document.getElementById("home")
 const profile = document.getElementById("profile")
 const add = document.getElementById("add")
 
 home.onclick = function() {
-    window.location.replace("home") 
+    window.location.replace("home.php") 
 }  
 profile.onclick = function() {
     window.location.replace("profile")
@@ -13,24 +18,34 @@ add.onclick = function() {
     window.location.replace("addPost")
 }
 
-function slider() {
+function updateSliders() {
 
-    const sliders = document.querySelectorAll(".posts__post__slider")
+    const sliders = document.querySelectorAll(slider_selector)
 
     for (let slider of sliders) {
-        const left_button = slider.querySelector(".posts__post__slider__left-button")
-        const right_button = slider.querySelector(".posts__post__slider__right-button")
-        const images = slider.querySelectorAll(".posts__post__slider__image")
+        const left_button = slider.querySelector(left_button_selector)
+        const right_button = slider.querySelector(right_button_selector)
+        const images = slider.querySelectorAll(image_selector)
         let index = 1;
         let maxIndex = images.length
 
-
         let indicator = document.createElement("button")
 
-        indicator.className = "posts__post__slider__indicator"
+        indicator.className = indicatorClassName
         indicator.setAttribute("disabled", "")
         
         showImg(index)
+
+        if (maxIndex == 1) {
+            left_button.style.display = "none"
+            right_button.style.display = "none"
+            indicator.style.display = "none"
+        } else {
+            left_button.style.display = "flex"
+            right_button.style.display = "flex"
+            indicator.style.display = "flex"
+        }
+
         changeIndicator(index)
 
         left_button.onclick = function() {
@@ -61,5 +76,4 @@ function slider() {
 
 }
 
-slider()
-}
+document.addEventListener("DOMContentLoaded", updateSliders())
