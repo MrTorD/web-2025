@@ -18,5 +18,5 @@
     <button class=<?=($post['isLiked'] == "true") ? "posts__post__likes_true" : "posts__post__likes_false"?> name="likes">❤️<?=$post["likes"]?></button>
     <p class="posts__post__title"> <?= $post["title"]?>
     </p>
-    <p class="posts__post__time"><?php $post["created_at"]?></p>
+    <p class="posts__post__time"><?= $post["created_at"]?></p>
 </div>
