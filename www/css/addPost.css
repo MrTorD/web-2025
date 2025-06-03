@@ -3,6 +3,18 @@
     src: url(fonts/golos-ui_regular.ttf);
 }
 
+.success {
+    display: none;
+    width: 95vw;
+    height: 95vh;
+    margin: auto auto;
+    justify-content: center;
+    align-items: center;
+    font-family: GolosUI;
+    font-size: 30px;
+
+}
+
 .add-post {
     display: flex;
     justify-content: center;
@@ -140,3 +152,4 @@
     border-radius: 10px;
     border: 0;
 }
+

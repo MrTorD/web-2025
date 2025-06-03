@@ -24,6 +24,19 @@
     margin: 12px 24px;
 }
 
+.posts__sidebar__user {
+    display: flex;
+    font-family: GolosUI;
+    font-size: 15px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    margin: 12px 24px;
+    margin-left: 18px;
+}
+
 .modal {
     display: none;
     flex-direction: column;
@@ -65,6 +78,7 @@
 }
 .posts__post{
     display: flex;
+    position: relative;
     flex-direction: column;
     font-size: 15px;
     font-weight: 400;
@@ -72,8 +86,8 @@
     line-height: 18px;
 }
 
-.posts__post__user {
-    display: flex;
+.posts__post__header__user {
+    display: inline-flex;
     align-items: center;
 }
 
@@ -83,13 +97,11 @@
 }
 
 .posts__post__title {
-  width: 600px;
-  margin-bottom: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; 
+    width: 600px;
+    margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 37px;
 }
 
 .posts__post__title__more {
@@ -131,7 +143,6 @@
     top: 50%;
 }
 
-
 .posts__post__slider__indicator {
     position: absolute;
     right: 3%;
@@ -152,22 +163,45 @@
     width: 600px;
 }
 
-.posts__post__user__name {
+.posts__post__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.posts__post__header__user__name {
     margin: 5px;
     display: inline-flex;
     font-weight: 500;
 }
 
-.posts__post__user__avatar {
+.posts__post__header__edit {
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}
+
+.posts__post__header__user__avatar {
     height: 32px;
     width: 32px;
     border-radius: 6px;
 }
 
-.posts__post__likes {
+.posts__post__likes_false {
     width: 12%;
     border: 0;
     border-radius: 8px;
     background-color: #2222220D; 
     padding: 6px 12px;
+    cursor: pointer;
 }
+
+.posts__post__likes_true {
+    width: 12%;
+    border: 0;
+    border-radius: 8px;
+    background-color: #ff03030d; 
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
