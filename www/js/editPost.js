@@ -19,13 +19,12 @@ const slider = document.querySelector(slider_select)
 const successWindow = document.querySelector(success_windows_selector)
 const addPostWindow = document.querySelector(add_post_selector)
 
-//const user_id = document.querySelector(user_id_selector).innerHTML
 const post_id = document.querySelector(post_id_selector).innerHTML
 
 inputImg.addEventListener("change", slideHandler)
 submit.addEventListener("click", submitHandler)
 
-isAnyPhoto = {value: false}
+isAnyPhoto = {value: true}
 isAnyTitle = false
 
 setInterval(enableSumbit, 1000, isAnyPhoto)
