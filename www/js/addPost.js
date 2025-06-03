@@ -1,4 +1,4 @@
-const user_id = 1
+const savePostApiURL = "api/savePost.php"
 
 const inputImg_Id = "upload"
 const inputText_selector = ".add-post__interface__add-title"
@@ -9,6 +9,9 @@ const slider_select = ".posts__post__slider"
 const slider_indicator_selector = ".posts__post__slider__indicator"
 const add_post_selector = ".add-post__interface"
 const success_windows_selector = ".success"
+
+const submitEnabled_Background = "black"
+const submitDisabled_Background = "#B4B4B4"
 
 const inputImg = document.getElementById(inputImg_Id)
 const inputText = document.querySelector(inputText_selector)
@@ -21,6 +24,8 @@ const addPostWindow = document.querySelector(add_post_selector)
 inputImg.addEventListener("change", slideHandler)
 submit.addEventListener("click", submitHandler)
 
+let images = []
+
 isAnyPhoto = {value: false}
 isAnyTitle = false
 
@@ -28,53 +33,52 @@ setInterval(enableSumbit, 1000, isAnyPhoto)
 
 function slideHandler() {
     isAnyPhoto.value = true
-    images = inputImg.files
-    for (let i = 0; i < images.length; i++) {
+    Array.from(inputImg.files).forEach(element => {
+        images.push(element)
         let image = document.createElement("img")
-        image.src = window.URL.createObjectURL(images[i])
+        image.src = window.URL.createObjectURL(element)
         image.className = image_ClassName
         slider.style.display = "flex"
         slider.append(image)
         startWindow.remove()
         updateSlider()
-    }
+    });
 }
 
 function submitHandler() {
     console.log(inputText.value)
     console.log(inputImg.files)
-    sendPost(inputText.value, inputImg.files)
+    sendPost(inputText.value, images)
 }    
 
 function enableSumbit(isAnyPhoto) {
     if (isAnyPhoto.value && inputText.value != "") {
         submit.disabled = false
-        submit.style.setProperty("background-color", "black")   
+        submit.style.setProperty("background-color", submitEnabled_Background)   
     } else {
         submit.disabled = true
-        submit.style.setProperty("background-color", "#B4B4B4")
+        submit.style.setProperty("background-color", submitDisabled_Background)
     }
 
 }
 
 async function sendPost(text, images) {
     let json = {
-        "created_by": user_id,
         "likes": 0,
         "title": text,
     };
-    json = JSON.stringify(json);
+    json = JSON.stringify(json)
 
     blob = new Blob([json], {type: "application/json"})
     
-    let formData = new FormData();
-    formData.append('json', blob); 
+    let formData = new FormData()
+    formData.append('json', blob)
 
     for (let i = 0; i < images.length; i++) {
-        formData.append('images[]', images[i]); 
+        formData.append('images[]', images[i])
     }
 
-    const response = await fetch('api.php', {
+    const response = await fetch(savePostApiURL, {
         method: "POST",
         body: formData
     })
@@ -86,7 +90,11 @@ async function sendPost(text, images) {
         alert("Ошибка, попробуйте ещё раз")
     }
 }
-    
+
+function authBySession() {
+
+}
+  
 function updateSlider() {
 
     const slider = document.querySelector(slider_selector)

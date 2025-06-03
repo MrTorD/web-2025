@@ -70,10 +70,7 @@ function updateSliders() {
             indicator.innerHTML = index + '/' + maxIndex
             slider.appendChild(indicator)
         }
-
-
     }
-
 }
 
 document.addEventListener("DOMContentLoaded", updateSliders())

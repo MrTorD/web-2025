@@ -7,8 +7,9 @@ const slider_select = ".posts__post__slider"
 const slider_indicator_selector = ".posts__post__slider__indicator"
 const add_post_selector = ".add-post__interface"
 const success_windows_selector = ".success"
-const user_id_selector = ".add-post__interface__created-by"
 const post_id_selector = ".add-post__interface__post-id"
+
+const editPostApiURL = "../api/editPost.php"
 
 const inputImg = document.getElementById(inputImg_Id)
 const inputText = document.querySelector(inputText_selector)
@@ -18,7 +19,7 @@ const slider = document.querySelector(slider_select)
 const successWindow = document.querySelector(success_windows_selector)
 const addPostWindow = document.querySelector(add_post_selector)
 
-const user_id = document.querySelector(user_id_selector).innerHTML
+//const user_id = document.querySelector(user_id_selector).innerHTML
 const post_id = document.querySelector(post_id_selector).innerHTML
 
 inputImg.addEventListener("change", slideHandler)
@@ -62,8 +63,6 @@ function enableSumbit(isAnyPhoto) {
 async function sendPost(text, images) {
     let json = {
         "post_id": post_id,
-        "created_by": user_id,
-        "likes": 0,
         "title": text,
     };
     json = JSON.stringify(json);
@@ -77,7 +76,7 @@ async function sendPost(text, images) {
         formData.append('images[]', images[i]); 
     }
 
-    const response = await fetch('apiEditPost.php', {
+    const response = await fetch(editPostApiURL, {
         method: "POST",
         body: formData
     })
