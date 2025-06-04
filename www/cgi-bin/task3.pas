@@ -1,0 +1,29 @@
+PROGRAM PrintEnvironment(INPUT, OUTPUT);
+USES
+  DOS;
+VAR
+  QueryString, Name: STRING;
+  PosName, NameLength, NameEnd: INTEGER;
+BEGIN
+  WRITELN('Content-Type: text/plain');
+  WRITELN;
+  QueryString := GetEnv('QUERY_STRING');
+  IF (Pos('name=', QueryString) <> 0)
+  THEN
+    PosName := Pos('name=', QueryString) + 5
+  ELSE
+    PosName := 0;
+  NameEnd := Pos('&', QueryString);
+  IF NameEnd = 0
+  THEN
+    NameLength := Length(QueryString) - 5
+  ELSE
+    NameLength := NameEnd - PosName;
+  Name := Copy(QueryString, PosName, NameLength);
+  IF (PosName = 0) OR (NameLength = 0)
+  THEN
+    WRITELN('Hello, dear Annonymous!')
+  ELSE
+    WRITELN('Hello, dear ', Name);
+  WRITELN
+END.

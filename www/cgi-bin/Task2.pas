@@ -7,7 +7,6 @@ BEGIN
   WRITELN('Content-Type: text/plain');
   WRITELN;
   S := GetEnv('QUERY_STRING');
-  WRITELN(S);
   IF S = 'lanterns=1'
   THEN
     WRITELN('The British are coming by sea')
